@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
 	<title>Free HTML5 Bootstrap Admin Template</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- The styles -->
