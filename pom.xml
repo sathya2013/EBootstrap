@@ -45,6 +45,11 @@
 				<id>Codehaus</id>
 				<url>http://repository.codehaus.org</url>
 			</repository>
+			
+			<repository>
+			<id>mvnrepository</id>
+			<url>http://mvnrepository.com</url>
+			</repository>
 		</repositories>
 		
 	<dependencies>
@@ -117,6 +122,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -124,6 +130,12 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>jsp-api</artifactId>
+		    <version>2.2.1-b03</version>
 		</dependency>
 	   
 	    <dependency>
@@ -482,6 +494,8 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		
+		
 		
 		<dependency>
 			<groupId>org.hibernate</groupId>
