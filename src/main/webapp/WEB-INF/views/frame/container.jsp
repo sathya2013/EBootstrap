@@ -2,9 +2,9 @@
 <div class="row-fluid">
 	<!-- left menu starts -->
 	<div class="span2 main-menu-span">
-		<div class="well nav-collapse sidebar-nav">
+		 <div class="well nav-collapse sidebar-nav">
 		  <iframe name="frame_left" width="100%" height="100%" frameborder="0" scrolling="no" src="${ctx}/management/index/nav.do" onLoad ="javascript:SetWinHeight(this)"></iframe>
-		</div>
+		 </div> 
 	</div>
 	
 	<noscript>
