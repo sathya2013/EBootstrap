@@ -36,7 +36,7 @@ public class Role implements Serializable {
 			joinColumns = { @JoinColumn(name = "role_id") }
 	)
 	@Column(name = "permission_id")
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.ketayao.security.entity.main")
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="com.me.bootstrap.entity")
 	private List<String> permissionList = Lists.newArrayList();
 	
 

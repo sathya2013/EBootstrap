@@ -13,19 +13,22 @@
  
 package com.me.bootstrap.service.impl;
 
-import java.util.List;
 
+import java.util.Collection;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.me.bootstrap.dao.RoleDao;
 import com.me.bootstrap.entity.Role;
 import com.me.bootstrap.service.RoleService;
 import com.me.bootstrap.shiro.ShiroDbRealm;
-import com.me.bootstrap.util.Page;
-import com.me.bootstrap.util.PageUtils;
+import com.me.bootstrap.util.SearchFilter;
+
+
 
 
 /** 
@@ -73,17 +76,17 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements Role
 		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
-	/**   
-	 * @param page
-	 * @param name
-	 * @return  
-	 * @see com.ketayao.security.service.RoleService#find(com.ketayao.util.dwz.Page, java.lang.String)  
-	 */
-	public List<Role> find(Page page, String name) {
-		org.springframework.data.domain.Page<Role> roles = 
-				(org.springframework.data.domain.Page<Role>)roleDao.findByNameContaining(name, PageUtils.createPageable(page));
-		PageUtils.injectPageProperties(page, roles);
-		return roles.getContent();
+	@Override
+	public org.springframework.data.domain.Page<Role> findPage(
+			Map<String, String[]> params, Pageable pageable) {
+		
+		return roleDao.findAll(spec(params),pageable);
+	}
+	
+	private Specification<Role> spec(Map<String, String[]> params) {
+		Collection<SearchFilter> filters = SearchFilter.parse(params).values();
+		Specification<Role> sp = SearchFilter.spec(filters, Role.class);
+		return sp;
 	}
 
 }

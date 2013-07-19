@@ -13,10 +13,15 @@
  
 package com.me.bootstrap.service;
 
-import java.util.List;
+
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.me.bootstrap.entity.Role;
-import com.me.bootstrap.util.Page;
+
+
 
 
 /** 
@@ -28,5 +33,7 @@ import com.me.bootstrap.util.Page;
 
 public interface RoleService extends BaseService<Role, Long>{
 	
-	List<Role> find(Page page, String name);
+	//List<Role> find(Page page, String name);
+	
+	public Page<Role> findPage(Map<String, String[]> params, Pageable pageable);
 }

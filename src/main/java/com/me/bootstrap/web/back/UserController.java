@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.me.bootstrap.constants.BootstrapConstants;
 import com.me.bootstrap.entity.User;
@@ -39,8 +40,13 @@ public class UserController {
 		return "/user/userList";
 	}
 	
-	
-	
+	@RequestMapping(value="/createform.do",method=RequestMethod.GET)
+	public String createForm(HttpServletRequest request)
+	{
+		
+		
+		return "/user/create";
+	}
 	
 	
 }

@@ -14,14 +14,19 @@
 package com.me.bootstrap.service.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.me.bootstrap.entity.User;
 import com.me.bootstrap.service.BaseService;
 import com.me.bootstrap.util.Page;
 import com.me.bootstrap.util.PageUtils;
+import com.me.bootstrap.util.SearchFilter;
 
 
 /** 
