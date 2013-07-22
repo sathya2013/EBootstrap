@@ -1,5 +1,7 @@
 package com.me.bootstrap.web.back;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +18,8 @@ public class LoginController {
 	@RequestMapping(value="/logout",method={RequestMethod.GET,RequestMethod.POST})
 	public String logout()
 	{
-		
-		return null;
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+		return "/login";
 	}
 }

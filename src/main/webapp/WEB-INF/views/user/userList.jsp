@@ -82,7 +82,7 @@
 											<i class="icon-zoom-in icon-white"></i>  
 											查看                                            
 										</a> 
-										<a class="btn btn-info" href="#">
+										<a class="btn btn-info" href="${ctx}/management/user/update.do?id=${bean.id}">
 											<i class="icon-edit icon-white"></i>  
 											编辑                                            
 										</a>

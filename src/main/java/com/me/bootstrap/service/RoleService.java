@@ -35,5 +35,6 @@ public interface RoleService extends BaseService<Role, Long>{
 	
 	//List<Role> find(Page page, String name);
 	
+	
 	public Page<Role> findPage(Map<String, String[]> params, Pageable pageable);
 }

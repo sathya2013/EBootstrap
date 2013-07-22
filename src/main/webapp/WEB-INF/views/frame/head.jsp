@@ -39,7 +39,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">Profile</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">退出系统</a></li>
+						<li><a href="${pageContext.request.contextPath}/logout">退出系统</a></li>
 					</ul>
 				</div>
 				<!-- user dropdown ends -->

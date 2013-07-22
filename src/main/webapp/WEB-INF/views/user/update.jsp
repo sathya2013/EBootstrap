@@ -23,41 +23,34 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<form class="form-horizontal" action="${ctx}/management/user/create.do" method="post">
+						<form class="form-horizontal" action="${ctx}/management/user/save.do" method="post">
 							<fieldset>
 							  <div class="control-group">
 								<label class="control-label" for="username">登陆名</label>
 								<div class="controls">
-								  <input class="input-xlarge focused" id="username" name="username" type="text" >
+								  <input class="input-xlarge focused" id="username" name="username" type="text" value="${user.username}" readonly="readonly">
+								   <input type="hidden" name="id" id="id" value="${user.id}"/>
 								</div>
 							  </div>
 							  
 							  <div class="control-group">
 								<label class="control-label" for="realname">真实名字</label>
 								<div class="controls">
-								  <input class="input-xlarge focused" id="realname" name="realname" type="text" >
-								</div>
-							  </div>
-							  
-							   <div class="control-group">
-								<label class="control-label" for="password">登陆密码</label>
-								<div class="controls">
-								  <input class="input-xlarge focused" id="plainPassword" name="plainPassword" type="password" >
-								  <span class="help-inline">默认为123456</span>
+								  <input class="input-xlarge focused" id="realname" name="realname" type="text" value="${user.realname}" readonly="readonly">
 								</div>
 							  </div>
 							  
 							  <div class="control-group">
 								<label class="control-label" for="phone">联系电话</label>
 								<div class="controls">
-								  <input class="input-xlarge focused" id="phone" name="phone" type="text" >
+								  <input class="input-xlarge focused" id="phone" name="phone" type="text" value="${user.phone}" >
 								</div>
 							  </div>
 							  
 							  <div class="control-group">
 								<label class="control-label" for="email">用户邮箱</label>
 								<div class="controls">
-								  <input class="input-xlarge focused" id="email" name="email" type="text" >
+								  <input class="input-xlarge focused" id="email" name="email" type="text" value="${user.email}">
 								</div>
 							  </div>
 							  
@@ -65,8 +58,8 @@
 								<label class="control-label" for="status">用户状态</label>
 								<div class="controls">
 								  <select id="status" name="status">
-									<option value="enabled">可用</option>
-				                    <option value="disabled">不可用</option>
+									<option value="enabled" ${user.status == "enabled" ? 'selected="selected"' : ''}>可用</option>
+				                    <option value="disabled" ${user.status == "disabled" ? 'selected="selected"' : ''}>不可用</option>
 								  </select>
 								</div>
 							  </div>
@@ -77,7 +70,7 @@
 								  <select id="orgnization" name="orgnization.id" data-rel="chosen">
 								  <c:forEach items="${orgnizations}" var="org">
 								     <c:if  test="${!empty org.parent}">
-								       <option value="${org.id}">${org.name}</option>
+								       <option value="${org.id}" <c:if test="${user.orgnization.id eq org.id }">selected</c:if>>${org.name}</option>
 								     </c:if>
 								  </c:forEach>
 								  </select>

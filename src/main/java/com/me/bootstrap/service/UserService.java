@@ -13,12 +13,12 @@
  
 package com.me.bootstrap.service;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.me.bootstrap.entity.User;
+import com.me.bootstrap.exception.ExistedException;
 
 
 /** 
@@ -31,6 +31,8 @@ import com.me.bootstrap.entity.User;
 public interface UserService extends BaseService<User, Long>{
 	
 	User get(String username);
+	
+	void save(User user) throws ExistedException;
 	
 	//List<User> find(Page page, String name);
 	
