@@ -7,7 +7,7 @@
 				<a href="${ctx}/management/index/center.do">我的工作台</a> <span class="divider">/</span>
 			</li>
 			<li>
-				<a href="#">编辑用户</a>
+				<a href="#">分配角色</a>
 			</li>
 		</ul>
 	</div>
@@ -15,7 +15,7 @@
     <div class="row-fluid sortable">
 				<div class="box span12">
 					<div class="box-header well" data-original-title>
-						<h2><i class="icon-edit"></i> 编辑用户表单</h2>
+						<h2><i class="icon-edit"></i> 分配角色表单</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<form class="form-horizontal" action="${ctx}/management/user/save.do" method="post">
+						<form class="form-horizontal" action="${ctx}/management/user/saveassign.do" method="post">
 							<fieldset>
 							  <div class="control-group">
 								<label class="control-label" for="username">登陆名</label>
@@ -41,37 +41,15 @@
 							  </div>
 							  
 							  <div class="control-group">
-								<label class="control-label" for="phone">联系电话</label>
+								<label class="control-label" for="role">角色分配</label>
 								<div class="controls">
-								  <input class="input-xlarge focused" id="phone" name="phone" type="text" value="${user.phone}" >
-								</div>
-							  </div>
-							  
-							  <div class="control-group">
-								<label class="control-label" for="email">用户邮箱</label>
-								<div class="controls">
-								  <input class="input-xlarge focused" id="email" name="email" type="text" value="${user.email}">
-								</div>
-							  </div>
-							  
-							  <div class="control-group">
-								<label class="control-label" for="status">用户状态</label>
-								<div class="controls">
-								  <select id="status" name="status">
-									<option value="enabled" ${user.status == "enabled" ? 'selected="selected"' : ''}>可用</option>
-				                    <option value="disabled" ${user.status == "disabled" ? 'selected="selected"' : ''}>不可用</option>
-								  </select>
-								</div>
-							  </div>
-							  
-							  <div class="control-group">
-								<label class="control-label" for="orgnization">所属组织</label>
-								<div class="controls">
-								  <select id="orgnization" name="orgnization.id" data-rel="chosen">
-								  <c:forEach items="${orgnizations}" var="org">
-								     <c:if  test="${!empty org.parent}">
-								       <option value="${org.id}" <c:if test="${user.orgnization.id eq org.id }">selected</c:if>>${org.name}</option>
-								     </c:if>
+								  <select id="role" name="role" multiple data-rel="chosen" style="width:350px">
+								  <c:forEach items="${roles}" var="role">								     
+								       <option value="${role.id}" 
+								         <c:forEach items="${user.userRoles}" var="ur">
+								            <c:if test="${role.id eq ur.role.id}">selected</c:if>
+								         </c:forEach>
+								       >${role.name}</option>								
 								  </c:forEach>
 								  </select>
 								</div>

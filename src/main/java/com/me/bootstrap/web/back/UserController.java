@@ -10,16 +10,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefaults;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.me.bootstrap.constants.BootstrapConstants;
 import com.me.bootstrap.entity.Orgnization;
+import com.me.bootstrap.entity.Role;
 import com.me.bootstrap.entity.User;
+import com.me.bootstrap.entity.UserRole;
 import com.me.bootstrap.exception.ExistedException;
 import com.me.bootstrap.service.OrgnizationService;
+import com.me.bootstrap.service.RoleService;
+import com.me.bootstrap.service.UserRoleService;
 import com.me.bootstrap.service.UserService;
 import com.me.bootstrap.web.Servlets;
 
@@ -37,6 +46,12 @@ public class UserController {
 	@Autowired
 	private OrgnizationService orgnizationService;
 	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserRoleService userRoleService;
+	
 	@ModelAttribute("preloadUser")
 	public User getOne(@RequestParam(value = "id", required = false) Long id) {
 		if (id != null) {
@@ -46,8 +61,7 @@ public class UserController {
 		}
 		return null;
 	}
-    //1:列表,
-    //2:添加
+   
 	@RequestMapping(value="/list.do")
 	public String listUser(@PageableDefaults(sort = "id", sortDir = Direction.DESC) Pageable pageable,
 			HttpServletRequest request, org.springframework.ui.Model modelMap){
@@ -91,5 +105,49 @@ public class UserController {
 		map.put("orgnizations", orgList);
 		map.put("user", user);
 		return "user/update";
+	}
+	
+	@RequestMapping(value="/preassign.do",method=RequestMethod.GET)
+	public String preAssign(Long id,ModelMap map)
+	{
+		User user =userService.get(id);
+	    List<Role> roleList = roleService.findAll();
+		map.put("user", user);
+		map.put("roles", roleList);
+		return "user/assignRole";
+	}
+	
+	
+	@RequestMapping(value="/saveassign.do",method=RequestMethod.POST)
+	public String saveAssign(Long id,Long[]role,HttpServletRequest request)
+	{
+		User user =userService.get(id);
+		user.getUserRoles().clear();
+		for(Long roleId:role)
+		{
+			UserRole userRole =new UserRole();
+			Role roles =roleService.get(roleId);
+			userRole.setUser(user);
+			userRole.setRole(roles);
+			user.getUserRoles().add(userRole);
+		}
+		userService.update(user);
+		return "redirect:list.do";
+	}
+	
+	
+	@RequestMapping(value="/deleteassign.do",method=RequestMethod.GET)
+	@ResponseBody
+	public Object deleteAssign(Long id,HttpServletRequest request)
+	{
+		Map<String, Object> map =Maps.newHashMap();
+		try {
+			userRoleService.deleteUserRole(id);
+			map.put("status", 1);
+			map.put("message", "角色删除成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 }

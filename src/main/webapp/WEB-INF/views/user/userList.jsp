@@ -1,5 +1,16 @@
 <%@include file="../include_inc.jsp"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<script type="text/javascript">
+<!--
+     function deleteAssign(id)
+     {
+		$.get("${ctx}/management/user/deleteassign.do?id="+id, function(result){ 
+			alert(result.message);
+		});
+     }
+//-->
+</script>
+			
 			<div>
 				<ul class="breadcrumb">
 					<li>
@@ -78,17 +89,17 @@
 									</td>
 									<td class="center"><fmt:formatDate value="${bean.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 									<td class="center">
-										<a class="btn btn-success" href="#">
-											<i class="icon-zoom-in icon-white"></i>  
-											查看                                            
-										</a> 
 										<a class="btn btn-info" href="${ctx}/management/user/update.do?id=${bean.id}">
 											<i class="icon-edit icon-white"></i>  
 											编辑                                            
 										</a>
-										<a class="btn btn-danger" href="#">
+										<a class="btn btn-danger" href="${ctx}/management/user/preassign.do?id=${bean.id}">
 											<i class="icon-trash icon-white"></i> 
-											 角色分配
+											 分配角色
+										</a>
+										<a class="btn btn-danger" href="#" onclick="javascript:deleteAssign(${bean.id})">
+											<i class="icon-trash icon-white"></i> 
+											删除角色
 										</a>
 										<a class="btn btn-danger" href="#">
 											<i class="icon-trash icon-white"></i> 

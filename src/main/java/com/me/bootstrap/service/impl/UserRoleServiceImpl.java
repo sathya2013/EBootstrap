@@ -54,5 +54,17 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRole, Long> impleme
 	public List<UserRole> find(Long userId) {
 		return userRoleDao.findByUserId(userId);
 	}
+	
+    @Transactional
+	@Override
+	public void deleteUserRole(Long userId) {
+		
+		List<UserRole> userRoles = userRoleDao.findByUserId(userId);
+		for(UserRole ur:userRoles)
+		{
+			userRoleDao.delete(ur.getId());
+		}
+		
+	}
 
 }

@@ -72,7 +72,7 @@
 							  </div>
 							  
 							  <div class="control-group">
-								<label class="control-label" for="orgnization">Modern Select</label>
+								<label class="control-label" for="orgnization">所属组织</label>
 								<div class="controls">
 								  <select id="orgnization" name="orgnization.id" data-rel="chosen">
 								  <c:forEach items="${orgnizations}" var="org">
@@ -86,7 +86,7 @@
 							  
 							  <div class="form-actions">
 								<button type="submit" class="btn btn-primary">保存</button>
-								<button class="btn">取消</button>
+								<button class="btn" onclick="javascript:window.history.go(-1);">取消</button>
 							  </div>
 							</fieldset>
 						  </form>

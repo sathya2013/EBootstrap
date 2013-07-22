@@ -34,4 +34,6 @@ public interface UserRoleService extends BaseService<UserRole, Long> {
 	 * @return
 	 */
 	List<UserRole> find(Long userId);
+	
+	public void deleteUserRole(Long userId);
 }

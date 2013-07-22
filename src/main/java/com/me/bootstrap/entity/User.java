@@ -6,7 +6,12 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+
+import com.google.common.collect.Sets;
+
+
 import java.util.Date;
+
 import java.util.Set;
 
 
@@ -52,8 +57,8 @@ public class User implements Serializable {
 	private Set<Logs> logs;
 
 	//bi-directional many-to-one association to UserRole
-	@OneToMany(mappedBy="user")
-	private Set<UserRole> userRoles;
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	private Set<UserRole> userRoles =Sets.newHashSet();
 
 	//bi-directional many-to-one association to Orgnization
     @ManyToOne
