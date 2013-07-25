@@ -7,7 +7,7 @@
 	<li><a class="ajax-link" href="${ctx}/management/user/list.do" target="frame_center"><i class="icon-edit"></i><span class="hidden-tablet"> 用户管理</span></a></li>
 	<li><a class="ajax-link" href="${ctx}/management/org/list.do" target="frame_center"><i class="icon-eye-open"></i><span class="hidden-tablet"> 部门管理</span></a></li>
 	<li><a class="ajax-link" href="${ctx}/management/role/list.do" target="frame_center"><i class="icon-list-alt"></i><span class="hidden-tablet"> 角色管理</span></a></li>
-	<li><a class="ajax-link" href="typography.html"><i class="icon-font"></i><span class="hidden-tablet"> Typography</span></a></li>
+	<li><a class="ajax-link" href="${ctx}/management/module/index.do" target="frame_center"><i class="icon-font"></i><span class="hidden-tablet"> 模块管理</span></a></li>
 	<li><a class="ajax-link" href="gallery.html"><i class="icon-picture"></i><span class="hidden-tablet"> Gallery</span></a></li>
 	<li class="nav-header hidden-tablet">Sample Section</li>
 	<li><a class="ajax-link" href="table.html"><i class="icon-align-justify"></i><span class="hidden-tablet"> Tables</span></a></li>

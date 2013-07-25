@@ -1,5 +1,6 @@
 <%@include file="../include_inc.jsp"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+		
 			<div>
 				<ul class="breadcrumb">
 					<li>
@@ -36,7 +37,7 @@
 								</div>	
 								</form>	
 								<div class="span2">
-								    <a class="btn btn-danger" href="#">
+								    <a class="btn btn-danger" href="${ctx}/management/role/precreate.do">
 											<i class="icon-trash icon-white"></i> 
 											新增角色
 									</a>
@@ -61,7 +62,7 @@
 											<i class="icon-zoom-in icon-white"></i>  
 											查看                                            
 										</a> 
-										<a class="btn btn-info" href="#">
+										<a class="btn btn-info" href="${ctx}/management/role/update.do?id=${bean.id}">
 											<i class="icon-edit icon-white"></i>  
 											编辑                                            
 										</a>

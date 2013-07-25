@@ -174,6 +174,7 @@ public class Freemarkers {
 		String json = Freemarkers.getString(model, name);
 		JsonMapper mapper = new JsonMapper();
 		return mapper.fromJson(json, targetClass);
+	
 	}
 
 	@SuppressWarnings("unchecked")

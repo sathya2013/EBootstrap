@@ -112,8 +112,9 @@
 
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <!-- Activiti begin -->
+    
+    <!-- 
+    
     <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
         <property name="dataSource" ref="dataSource"/>
         <property name="transactionManager" ref="transactionManager"/>
@@ -122,23 +123,23 @@
         <property name="history" value="full"/>
         <property name="processDefinitionCacheLimit" value="10"/>
    
-        <!-- 生成流程图的字体 -->
+        
         <property name="activityFontName" value="宋体"/>
         <property name="labelFontName" value="宋体"/>
    
-        <!-- 缓存支持-->
+      
         <property name="processDefinitionCache">
             <bean class="com.me.bootstrap.activiti.cache.DistributedCache" />
         </property>
 
-        <!-- 自动部署-->
+    
         <property name="deploymentResources">
             <list>
                 <value>classpath*:/deployments/*</value>
             </list>
         </property>
      
-        <!-- 自定义表单字段类型 -->
+        
         <property name="customFormTypes">
             <list>
                 <bean class="com.me.bootstrap.activiti.form.UsersFormType"/>
@@ -159,6 +160,6 @@
     <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
     <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
     <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
-   
+    -->
     <!-- Activiti end -->
 </beans>

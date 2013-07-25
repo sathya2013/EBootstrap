@@ -14,15 +14,10 @@
 package com.me.bootstrap.dao;
 
 import java.util.List;
-
-import javax.persistence.QueryHint;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
-
 import com.me.bootstrap.entity.Module;
 
 

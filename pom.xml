@@ -7,7 +7,7 @@
 	   <properties>
 			<!-- 主要依赖库的版本定义 -->
 			<activiti.version>5.13</activiti.version>
-			<spring.version>3.1.2.RELEASE</spring.version>
+			<spring.version>3.2.1.RELEASE</spring.version>
 			<hibernate.version>4.0.1.Final</hibernate.version>
 			<ehcache.version>2.5.2</ehcache.version>
 			<spring-data-jpa.version>1.2.0.RC1</spring-data-jpa.version>
@@ -35,12 +35,12 @@
 		      <name>QueryDsl</name>
 		      <url>http://source.mysema.com/maven2/releases</url>
 		    </repository>
-		    
+		    <!-- 
 		    <repository>
 				<id>Activiti</id>
 				<url>https://maven.alfresco.com/nexus/content/groups/public</url>
 			</repository>
-			
+			-->
 			<repository>
 				<id>Codehaus</id>
 				<url>http://repository.codehaus.org</url>
@@ -48,11 +48,17 @@
 		</repositories>
 	<dependencies>
 	
-	   <!-- activiti -->
+	   <!-- activiti 
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-engine</artifactId>
 			<version>${activiti.version}</version>
+			<exclusions>
+			   <exclusion>
+				   <artifactId>jackson-core-asl</artifactId>
+				   <groupId>org.codehaus.jackson</groupId>
+			   </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.activiti</groupId>
@@ -79,27 +85,46 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		
+		
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-modeler</artifactId>
             <version>${activiti.version}</version>
+            <exclusions>
+			   <exclusion>
+				   <artifactId>jackson-core-asl</artifactId>
+				   <groupId>org.codehaus.jackson</groupId>
+			   </exclusion>
+			   <exclusion>
+				   <artifactId>jackson-mapper-asl</artifactId>
+				   <groupId>org.codehaus.jackson</groupId>
+			   </exclusion>
+			</exclusions>
 		</dependency>
 		
-		<!-- 支持activiti缓存 -->
+		 支持activiti缓存 
 		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-core</artifactId>
 			<version>5.1.7.Final</version>
 		</dependency>
-
-		<!-- Jackson JSON Mapper -->
-		<!-- SpringMVC的@ResponseBody需要使用 -->
+        -->
+		<!-- Jackson JSON Mapper
+		 SpringMVC的@ResponseBody需要使用 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.7</version>
+			<version>1.9.10</version>
 		</dependency>
-	
+	    
 		<dependency>
 		    <groupId>c3p0</groupId>
 		    <artifactId>c3p0</artifactId>

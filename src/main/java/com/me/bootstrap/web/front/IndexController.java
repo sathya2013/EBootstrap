@@ -2,11 +2,16 @@ package com.me.bootstrap.web.front;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Maps;
 import com.me.bootstrap.constants.BootstrapConstants;
 import com.me.bootstrap.model.Info;
 
@@ -34,5 +39,15 @@ public class IndexController {
 		}
 		request.setAttribute("infoList", infoList);
 		return "/1/bluewise/index.html";
+	}
+	
+	@RequestMapping(value="/test.jspx",method=RequestMethod.GET)
+	@ResponseBody
+	public Object test(HttpServletRequest request)
+	{
+		Map<String, Object> map =Maps.newHashMap();
+		map.put("status", 1);
+		map.put("message", "这是一个测试!");
+		return map;
 	}
 }
