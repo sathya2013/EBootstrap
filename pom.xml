@@ -35,12 +35,12 @@
 		      <name>QueryDsl</name>
 		      <url>http://source.mysema.com/maven2/releases</url>
 		    </repository>
-		    <!-- 
+		    
 		    <repository>
 				<id>Activiti</id>
 				<url>https://maven.alfresco.com/nexus/content/groups/public</url>
 			</repository>
-			-->
+			
 			<repository>
 				<id>Codehaus</id>
 				<url>http://repository.codehaus.org</url>
@@ -48,17 +48,11 @@
 		</repositories>
 	<dependencies>
 	
-	   <!-- activiti 
+	   <!-- activiti  -->
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-engine</artifactId>
 			<version>${activiti.version}</version>
-			<exclusions>
-			   <exclusion>
-				   <artifactId>jackson-core-asl</artifactId>
-				   <groupId>org.codehaus.jackson</groupId>
-			   </exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.activiti</groupId>
@@ -92,27 +86,17 @@
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-modeler</artifactId>
             <version>${activiti.version}</version>
-            <exclusions>
-			   <exclusion>
-				   <artifactId>jackson-core-asl</artifactId>
-				   <groupId>org.codehaus.jackson</groupId>
-			   </exclusion>
-			   <exclusion>
-				   <artifactId>jackson-mapper-asl</artifactId>
-				   <groupId>org.codehaus.jackson</groupId>
-			   </exclusion>
-			</exclusions>
 		</dependency>
 		
-		 支持activiti缓存 
+		<!--  支持activiti缓存  -->
 		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-core</artifactId>
 			<version>5.1.7.Final</version>
 		</dependency>
-        -->
+       
 		<!-- Jackson JSON Mapper
-		 SpringMVC的@ResponseBody需要使用 -->
+		 SpringMVC的@ResponseBody需要使用
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
@@ -124,7 +108,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.10</version>
 		</dependency>
-	    
+	     -->
 		<dependency>
 		    <groupId>c3p0</groupId>
 		    <artifactId>c3p0</artifactId>

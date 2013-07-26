@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,9 @@ import org.springframework.data.web.PageableDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Maps;
 import com.me.bootstrap.constants.BootstrapConstants;
@@ -27,11 +26,11 @@ import com.me.bootstrap.entity.Role;
 import com.me.bootstrap.entity.User;
 import com.me.bootstrap.entity.UserRole;
 import com.me.bootstrap.exception.ExistedException;
-import com.me.bootstrap.model.Node;
 import com.me.bootstrap.service.OrgnizationService;
 import com.me.bootstrap.service.RoleService;
 import com.me.bootstrap.service.UserRoleService;
 import com.me.bootstrap.service.UserService;
+import com.me.bootstrap.util.RenderUtil;
 import com.me.bootstrap.web.Servlets;
 
 
@@ -139,8 +138,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/deleteassign.do",method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public Object deleteAssign(Long id,HttpServletRequest request)
+	public String deleteAssign(Long id,HttpServletResponse response)
 	{
 		Map<String, Object> map =Maps.newHashMap();
 		try {
@@ -150,7 +148,8 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return map;
+		RenderUtil.renderJson(response, map, "encoding:UTF-8");
+		return  null;
 	}
 	
 	@RequestMapping(value="/delete.do",method=RequestMethod.GET)

@@ -32,4 +32,8 @@ public interface ModuleService extends BaseService<Module, Long>{
 	List<Module> find(Long parentId, String name, Page page);
 	
 	Module getTree();
+	
+	List<Module> findRootModules();
+	
+	List<Module> findByParentId(Long parentId);
 }

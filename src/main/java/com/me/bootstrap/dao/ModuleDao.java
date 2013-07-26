@@ -33,7 +33,9 @@ public interface ModuleDao extends JpaRepository<Module, Long> {
 			
 	Page<Module> findByParentId(Long parentId, Pageable pageable);
 	
-	Page<Module> findByParentIdAndNameContaining(Long parentId, String name, Pageable pageable);
+	List<Module> findByParentId(Long parentId);
+	
+	Page<Module> findByParentAndNameContaining(Long parentId, String name, Pageable pageable);
 	
 //	@QueryHints(value={
 //			@QueryHint(name="org.hibernate.cacheable",value="true"),
@@ -42,4 +44,6 @@ public interface ModuleDao extends JpaRepository<Module, Long> {
 //	)
 	@Query("from Module m order by m.priority ASC")
 	List<Module> findAllWithCache();
+	
+	List<Module> findByParentIsNull();
 }

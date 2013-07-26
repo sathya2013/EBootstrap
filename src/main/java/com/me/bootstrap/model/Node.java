@@ -1,83 +1,57 @@
 package com.me.bootstrap.model;
 
+
+
+import java.util.Map;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
+
 
 @XmlRootElement
 public class Node implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private Long id;
 	private String text;
-	private boolean leaf;
-	private String value;
-	private String cls;
-	private boolean expanded;
-	private boolean checked;
-	private String href;
-
-	public String getId() {
+	private String state;
+	private Map<String,String> attributes=Maps.newHashMap();
+	private Set<Node> children =Sets.newHashSet();
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getText() {
 		return text;
 	}
-
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	public boolean isLeaf() {
-		return leaf;
+	public String getState() {
+		return state;
 	}
-
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
+	public void setState(String state) {
+		this.state = state;
 	}
-
-	public String getValue() {
-		return value;
+	public Map<String, String> getAttributes() {
+		return attributes;
 	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public void setAttributes(Map<String, String> attributes) {
+		this.attributes = attributes;
 	}
-
-	public String getCls() {
-		return cls;
+	public Set<Node> getChildren() {
+		return children;
 	}
-
-	public void setCls(String cls) {
-		this.cls = cls;
+	public void setChildren(Set<Node> children) {
+		this.children = children;
 	}
-
-	public boolean isExpanded() {
-		return expanded;
-	}
-
-	public void setExpanded(boolean expanded) {
-		this.expanded = expanded;
-	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
-
-	public String getHref() {
-		return href;
-	}
-
-	public void setHref(String href) {
-		this.href = href;
-	}
+	
 
 }

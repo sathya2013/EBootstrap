@@ -94,7 +94,7 @@ public class ModuleServiceImpl extends BaseServiceImpl<Module, Long>implements M
 	 */
 	public List<Module> find(Long parentId, String name, Page page) {
 		org.springframework.data.domain.Page<Module> p = 
-				moduleDao.findByParentIdAndNameContaining(parentId, name, PageUtils.createPageable(page));
+				moduleDao.findByParentAndNameContaining(parentId, name, PageUtils.createPageable(page));
 		PageUtils.injectPageProperties(page, p);
 		return p.getContent();
 	}
@@ -155,6 +155,18 @@ public class ModuleServiceImpl extends BaseServiceImpl<Module, Long>implements M
 		children.removeAll(tmp);
 		
 		makeChildren(tmp, children);
+	}
+
+	@Override
+	public List<Module> findRootModules() {
+		return moduleDao.findByParentIsNull();
+		
+	}
+
+	@Override
+	public List<Module> findByParentId(Long parentId) {
+		
+		return moduleDao.findByParentId(parentId);
 	}
 	
 }
