@@ -85,7 +85,7 @@ public class ModuleController {
 		return node;
 	}
 	
-	@RequestMapping(value ="/loadmodule",method=RequestMethod.GET)
+	@RequestMapping(value ="/loadmodule",method={RequestMethod.GET,RequestMethod.POST})
 	public String loadRootModule(HttpServletResponse response)
 	{
 		
@@ -102,22 +102,25 @@ public class ModuleController {
 			map.put("url", module.getUrl());
 			map.put("parent", module.getParent()!=null?module.getParent().getName():"");
 			map.put("addChild", "<a href='javascript:addChildRoot("+module.getId()+")'><font color='black'>添加子模块<font></a>");
+			if(CollectionUtils.isNotEmpty(module.getChildren()))
+			{
+				map.put("state", "closed");
+			}
 			map.put("operation", "<a href=''>操作</a>");
 			modelList.add(map);
 		}
 		jsonMap.put("total", CollectionUtils.isEmpty(modelList)?0:modelList.size());
 		jsonMap.put("rows", modelList);
-		
 		RenderUtil.renderJson(response, jsonMap, "encoding:UTF-8");
 		return null;
 	}
 	
 	
-	@RequestMapping(value="/submodule.do",method=RequestMethod.GET)
-	public String loadSubModule(Long id,HttpServletResponse response)
+	@RequestMapping(value="/submodule.do",method={RequestMethod.GET,RequestMethod.POST})
+	public String loadSubModule(HttpServletRequest request,HttpServletResponse response)
 	{
-		List<Module> modules =moduleService.findRootModules();
-		Map<String,Object> jsonMap =Maps.newHashMap();
+		String id =request.getParameter("id");
+		List<Module> modules =moduleService.findByParentId(Long.valueOf(id));
 		List<Map<String,Object>> modelList =Lists.newArrayList();
 		for(Module module:modules)
 		{
@@ -127,14 +130,16 @@ public class ModuleController {
 			map.put("priority", module.getPriority());
 			map.put("sn", module.getSn());
 			map.put("url", module.getUrl());
+			if(CollectionUtils.isNotEmpty(module.getChildren()))
+			{
+				map.put("state", "closed");
+			}
 			map.put("parent", module.getParent()!=null?module.getParent().getName():"");
 			map.put("addChild", "<a href='javascript:addChildRoot("+module.getId()+")'><font color='black'>添加子模块<font></a>");
 			map.put("operation", "<a href=''>操作</a>");
 			modelList.add(map);
 		}
-		jsonMap.put("total", CollectionUtils.isEmpty(modelList)?0:modelList.size());
-		jsonMap.put("rows", modelList);
-		RenderUtil.renderJson(response, jsonMap, "encoding:UTF-8");
+		RenderUtil.renderJson(response, modelList, "encoding:UTF-8");
 		return null;
 	}
 }
