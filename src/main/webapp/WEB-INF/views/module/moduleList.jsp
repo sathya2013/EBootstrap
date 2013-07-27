@@ -4,35 +4,23 @@
 <link href="${ctx}/js/jqueryeasyui/themes/icon.css" rel="stylesheet">
 <script src="${ctx}/js/jqueryeasyui/jquery.easyui.min.js"></script>	
 <script src="${ctx}/js/custom/module.js"></script>	
-
-			<div>
-				<ul class="breadcrumb">
-					<li>
-						<a href="${ctx}/management/index/center.do">我的工作台</a> <span class="divider">/</span>
-					</li>
-					<li>
-						<a href="#">模块管理</a>
-					</li>
-				</ul>
-			</div>
+			<div class="row-fluid sortable">		
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2><i class="icon-user"></i>模块列表</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+					  <table class="table table-striped table-bordered bootstrap-datatable datatable" id="moduleList">
+						
+					  </table>  					           
+					</div>
+				</div>
 				
-			<div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span3">
-                    <div class="well">
-                      
-                      
-                      
-                    </div><!--/.well -->
-                  </div><!--/span-->
-                  
-                  <div class="span9" id="mainContent">
-                      <div class="row-fluid" id="moduleList">
-                              
-                      </div>
-                      <div class="span8" id="reporter"></div>
-                  </div>
-            </div>
-        </div>
+           </div>
 
 
