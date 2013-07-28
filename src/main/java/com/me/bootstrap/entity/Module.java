@@ -66,6 +66,17 @@ public class Module  implements Comparable<Module> {
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="parent")
 	@OrderBy("priority ASC")
 	private Set<Module> children = Sets.newHashSet();
+	
+	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="module")
+	private Set<Permission> permissions =Sets.newHashSet();
+
+	public Set<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
+	}
 
 	/**  
 	 * 返回 name 的值   
