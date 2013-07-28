@@ -1,26 +1,17 @@
 package com.me.bootstrap.web.back;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.me.bootstrap.entity.Module;
-import com.me.bootstrap.model.Node;
 import com.me.bootstrap.service.ModuleService;
 import com.me.bootstrap.util.RenderUtil;
 
@@ -37,52 +28,6 @@ public class ModuleController {
 		List<Module> modules =moduleService.findAll();
 		request.setAttribute("modules", modules);
 		return "/module/moduleList";
-	}
-	
-	@RequestMapping(value="/subnode.do",method={RequestMethod.GET,RequestMethod.POST})
-	public String subModules(Long id,HttpServletRequest request,HttpServletResponse response)
-	{
-		Module module = moduleService.get(id);
-		Set<Module> modules = module.getChildren();
-		List<Node> nodeList =new ArrayList<Node>();
-		for(Module mos:modules)
-		{
-			Node node =new Node();
-			node.setId(mos.getId());
-			node.setText(mos.getName());
-			if(CollectionUtils.isNotEmpty(mos.getChildren()))
-			{	
-				node.setState("closed");
-			}else {
-				node.getAttributes().put("url", mos.getUrl());
-			}
-			nodeList.add(expendSubNode(mos,node));
-		}
-		RenderUtil.renderJson(response, nodeList, "encoding:UTF-8");
-		return  null;
-	}
-	
-	
-	private Node expendSubNode(Module parent,Node node)
-	{
-		if(CollectionUtils.isEmpty(parent.getChildren()))
-		{
-			return node;
-		}
-		for(Module module:parent.getChildren())
-		{
-			Node sub =new Node();
-			sub.setId(module.getId());
-			sub.setText(module.getName());
-			if(CollectionUtils.isNotEmpty(module.getChildren()))
-			{	
-				sub.setState("closed");
-			}else {
-				sub.getAttributes().put("url", module.getUrl());
-			}
-			node.getChildren().add(expendSubNode(module,sub));
-		}
-		return node;
 	}
 	
 	@RequestMapping(value ="/loadmodule",method={RequestMethod.GET,RequestMethod.POST})
