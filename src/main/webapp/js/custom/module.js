@@ -32,7 +32,7 @@ $(function(){
 					 text:'添加',
 				     iconCls:'icon-add',
 				     handler:function(){
-				       alert('add');
+				       $('#addmodule').modal('show');
 			         }
 		         },
 		         '-',
