@@ -30,9 +30,7 @@ $(function(){
 	
 	$('#btn_save').click(function(){
 		
-		
-		
-		
+		$("#addmoduleform").submit();
 		
 	});
 });
@@ -63,7 +61,7 @@ $(function(){
 					<h3>添加模块</h3>
 				</div>
 				<div class="modal-body">
-				 <form class="form-horizontal"> 
+				 <form class="form-horizontal" name="addmoduleform" action="${ctx}/management/module/savemodule.do" method="post" target="hiddenframe"> 
 						<fieldset>
 							 <div class="control-group">
 								<label class="control-label" for="name">模块名称</label>
@@ -126,5 +124,6 @@ $(function(){
 					<a href="#" class="btn" data-dismiss="modal">关闭</a>
 					<a id="btn_save" href="#" class="btn btn-primary">保存</a>
 				</div>
-			
+			    <iframe name="hiddenframe" name="hiddenframe" style="display: none;"/>
 			</div>
+			
