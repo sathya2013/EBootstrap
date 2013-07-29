@@ -87,4 +87,11 @@ public class ModuleController {
 		RenderUtil.renderJson(response, modelList, "encoding:UTF-8");
 		return null;
 	}
+	
+	@RequestMapping(value="/savemodule.do",method=RequestMethod.POST)
+	public String saveModule(Module module,HttpServletResponse response)
+	{
+		RenderUtil.renderJson(response, "保存成功!", "encoding:UTF-8");
+		return null;
+	}
 }
