@@ -3,7 +3,7 @@ $(function(){
 	$('#moduleList').treegrid({
 		title:'',
 		iconCls:'',
-		height:309,
+		height:509,
 		nowrap: false,
 		rownumbers: false,
 		//animate:true,
@@ -66,4 +66,16 @@ $(function(){
 
 function loadContentWidth(index){
 	return $("#moduleList").width()*index;
+}
+
+function addSubModule(moduleId)
+{
+	$.get("loadmodulename.do?id="+moduleId, function(result){ 
+  		     if(result.name)
+  			 {
+  		    	var $fieldset =$("#newSubPermissonInput");
+  				$("input[name=parent.id]",$fieldset).val(result.name);
+  				$('#addsubmodule').modal('show');
+  			 }
+  	});
 }
