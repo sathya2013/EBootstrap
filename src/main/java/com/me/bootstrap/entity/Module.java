@@ -2,6 +2,7 @@
  
 package com.me.bootstrap.entity;
 
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 
@@ -67,16 +70,10 @@ public class Module  implements Comparable<Module> {
 	@OrderBy("priority ASC")
 	private Set<Module> children = Sets.newHashSet();
 	
-	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="module")
-	private Set<Permission> permissions =Sets.newHashSet();
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="module")
+	private List<Permission> permissions =Lists.newArrayList();
 
-	public Set<Permission> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(Set<Permission> permissions) {
-		this.permissions = permissions;
-	}
+	
 
 	/**  
 	 * 返回 name 的值   
@@ -214,6 +211,14 @@ public class Module  implements Comparable<Module> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 	
 	

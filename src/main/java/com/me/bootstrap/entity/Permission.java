@@ -32,6 +32,7 @@ public class Permission implements Serializable {
 
 	//bi-directional many-to-one association to Module
     @ManyToOne
+    @JoinColumn(name="module_id")
 	private Module module;
 
 	//bi-directional many-to-one association to RolePermission
