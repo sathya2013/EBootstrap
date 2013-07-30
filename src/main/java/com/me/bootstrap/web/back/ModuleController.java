@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.me.bootstrap.entity.Module;
+import com.me.bootstrap.entity.Permission;
 import com.me.bootstrap.service.ModuleService;
 import com.me.bootstrap.util.RenderUtil;
 
@@ -30,7 +31,7 @@ public class ModuleController {
 		return "/module/moduleList";
 	}
 	
-	@RequestMapping(value ="/loadmodule",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value ="/loadmodule.do",method={RequestMethod.GET,RequestMethod.POST})
 	public String loadRootModule(HttpServletResponse response)
 	{
 		
@@ -51,7 +52,7 @@ public class ModuleController {
 			{
 				map.put("state", "closed");
 			}
-			map.put("operation", "<a href=''>操作</a>");
+			map.put("operation", "<a href='javascript:void(0);' onclick='javascript:addSubModule("+module.getId()+");'>添加子模块</a>");
 			modelList.add(map);
 		}
 		jsonMap.put("total", CollectionUtils.isEmpty(modelList)?0:modelList.size());
@@ -91,7 +92,51 @@ public class ModuleController {
 	@RequestMapping(value="/savemodule.do",method=RequestMethod.POST)
 	public String saveModule(Module module,HttpServletResponse response)
 	{
-		RenderUtil.renderJson(response, "保存成功!", "encoding:UTF-8");
+		int result =1;
+		try {
+			List<Permission> permissions =module.getPermissions();
+			for(Permission permission:permissions)
+			{
+				permission.setModule(module);
+			}
+			moduleService.save(module);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result =0;
+		}
+		RenderUtil.renderHtml(response, "<script type='text/javascript' type='language'>parent.window.callback("+result+")</script>", "encoding:UTF-8");
+		return null;
+	}
+	
+	@RequestMapping(value="/savesubmodule.do",method=RequestMethod.POST)
+	public String saveSubModule(Module module,HttpServletResponse response){
+		 
+		int result =1;
+		try {
+			
+			Module parentModule =moduleService.get(module.getParent().getId());
+			module.setParent(parentModule);
+			for(Permission permission:module.getPermissions())
+			{
+				permission.setModule(module);
+			}
+			moduleService.save(module);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result=0;
+		}
+		RenderUtil.renderHtml(response, "<script type='text/javascript' type='language'>parent.window.callback("+result+")</script>", "encoding:UTF-8");
+		return null;
+	}
+	
+	@RequestMapping(value="/loadmodulename.do",method=RequestMethod.GET)
+	public String getModuleName(Long id,HttpServletResponse response)
+	{
+		
+		Module module =moduleService.get(id);
+		Map<String, Object> map =Maps.newHashMap();
+		map.put("name", module.getName());
+		RenderUtil.renderJson(response,map , "encoding:UTF-8");
 		return null;
 	}
 }
