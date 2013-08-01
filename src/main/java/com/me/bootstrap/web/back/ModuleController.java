@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import oracle.net.aso.p;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.ReflectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +18,7 @@ import com.google.common.collect.Maps;
 import com.me.bootstrap.entity.Module;
 import com.me.bootstrap.entity.Permission;
 import com.me.bootstrap.service.ModuleService;
+import com.me.bootstrap.util.ReflectionUtils;
 import com.me.bootstrap.util.RenderUtil;
 
 @Controller
@@ -178,12 +183,30 @@ public class ModuleController {
 		try {
 			Module orignalModule = moduleService.get(module.getId());
 			orignalModule.getPermissions().clear();
-			orignalModule.setPermissions(module.getPermissions());
 			orignalModule.setName(module.getName());
 			orignalModule.setPriority(module.getPriority());
 			orignalModule.setSn(module.getSn());
 			orignalModule.setDescription(module.getDescription());
 			orignalModule.setUrl(module.getUrl());
+			List<Long> idList =ReflectionUtils.convertElementPropertyToList(orignalModule.getPermissions(), "id");
+			for(Permission permission:module.getPermissions())
+			{
+				if(permission.getId()==null)
+				{
+					
+				 permission.setModule(orignalModule);
+				 orignalModule.getPermissions().add(permission);
+				 
+				}else {
+					if(idList.contains(permission.getId()))
+					{
+						
+					}
+					
+				}
+			}
+				
+			
 			moduleService.update(orignalModule);
 		} catch (Exception e) {
 			result =0;
