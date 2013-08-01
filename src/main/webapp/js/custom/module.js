@@ -73,9 +73,39 @@ function addSubModule(moduleId)
 	$.get("loadmodulename.do?id="+moduleId, function(result){ 
   		     if(result.name)
   			 {
-  		    	var $fieldset =$("#newSubPermissonInput");
-  				$("input[name=parent.id]",$fieldset).val(result.name);
+  				$("input[id=parentId]").val(moduleId);
+  				$("input[id=parentName]").val(result.name);
   				$('#addsubmodule').modal('show');
   			 }
   	});
+}
+
+function editModule(moduleId)
+{
+	$.get("getmoduledetail.do?id="+moduleId, function(result){ 
+		     
+		     var module =result.module;
+		     var permissions =result.permissions;
+		     var $editfield = $('#editdiv');
+		     var $editPermissionfield =$('#toNewEditPermission');
+		     if(module)
+		     {
+		    	 $("input[name=id]",$editfield).val(module.id);
+		    	 $("input[name=name]",$editfield).val(module.name);
+		    	 $("input[name=url]",$editfield).val(module.url);
+		    	 $("input[name=sn]",$editfield).val(module.sn);
+		    	 $("input[name=priority]",$editfield).val(module.priority);
+		     }
+		     if(permissions)
+		     {
+		    	$editPermissionfield.empty();
+		    	$(permissions).each(function(index,node){
+		    		
+		    		$editPermissionfield.append(node.name + '(' + node.shortName + ')' + '<input type="checkbox" name="permissions[' + index + '].shortName" value="' + node.shortName + '" checked="checked" rel="' + index + '"/>&nbsp;&nbsp;'); 
+		    		$editPermissionfield.append('<input type="hidden" name="permissions[' + index + '].name" value="' + node.name + '" rel="' + index + '"/>');
+		    		
+		    	});
+		     }
+		     $('#editmodule').modal('show');
+	});
 }
