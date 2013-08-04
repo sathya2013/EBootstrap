@@ -202,11 +202,14 @@ public class ModuleController {
 				}else {
 					for(Permission oPermission:orignalModule.getPermissions())
 					{
-						if(oPermission.getId().equals(permission.getId()))
+						if(permission.getId()!=null)
 						{
-							oPermission.setModule(null);
-							permission =oPermission;
-							break;
+							if(oPermission.getId().equals(permission.getId()))
+							{
+								oPermission.setModule(null);
+								permission =oPermission;
+								break;
+							}
 						}
 					}
 					orignalModule.getPermissions().remove(permission);
