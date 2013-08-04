@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import oracle.net.aso.p;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ReflectUtils;
 import org.springframework.stereotype.Controller;
@@ -188,25 +189,29 @@ public class ModuleController {
 			orignalModule.setSn(module.getSn());
 			orignalModule.setDescription(module.getDescription());
 			orignalModule.setUrl(module.getUrl());
-			List<Long> idList =ReflectionUtils.convertElementPropertyToList(orignalModule.getPermissions(), "id");
+			//List<Long> idList =ReflectionUtils.convertElementPropertyToList(orignalModule.getPermissions(), "id");
 			for(Permission permission:module.getPermissions())
 			{
-				if(permission.getId()==null)
+				if(StringUtils.isNotBlank(permission.getShortName()))
 				{
-					
-				 permission.setModule(orignalModule);
-				 orignalModule.getPermissions().add(permission);
-				 
-				}else {
-					if(idList.contains(permission.getId()))
+					if(permission.getId()==null)
 					{
-						
+					  permission.setModule(orignalModule);
+					  orignalModule.getPermissions().add(permission);
 					}
-					
+				}else {
+					for(Permission oPermission:orignalModule.getPermissions())
+					{
+						if(oPermission.getId().equals(permission.getId()))
+						{
+							oPermission.setModule(null);
+							permission =oPermission;
+							break;
+						}
+					}
+					orignalModule.getPermissions().remove(permission);
 				}
 			}
-				
-			
 			moduleService.update(orignalModule);
 		} catch (Exception e) {
 			result =0;
