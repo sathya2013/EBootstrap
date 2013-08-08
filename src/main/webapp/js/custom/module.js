@@ -100,10 +100,9 @@ function editModule(moduleId)
 		     {
 		    	$editPermissionfield.empty();
 		    	$(permissions).each(function(index,node){
-		    		
 		    		$editPermissionfield.append(node.name + '(' + node.shortName + ')' + '<input type="checkbox" name="permissions[' + index + '].shortName" value="' + node.shortName + '" checked="checked" rel="' + index + '"/>&nbsp;&nbsp;'); 
 		    		$editPermissionfield.append('<input type="hidden" name="permissions[' + index + '].name" value="' + node.name + '" rel="' + index + '"/>');
-		    		
+		    		$editPermissionfield.append('<input type="hidden" name="permissions[' + index + '].id" value="' + node.id + '" rel="' + index + '"/>');
 		    	});
 		     }
 		     $('#editmodule').modal('show');
