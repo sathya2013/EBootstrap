@@ -1,16 +1,13 @@
 package com.me.bootstrap.web.back;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import oracle.net.aso.p;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.ReflectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +16,6 @@ import com.google.common.collect.Maps;
 import com.me.bootstrap.entity.Module;
 import com.me.bootstrap.entity.Permission;
 import com.me.bootstrap.service.ModuleService;
-import com.me.bootstrap.util.ReflectionUtils;
 import com.me.bootstrap.util.RenderUtil;
 
 @Controller
@@ -183,38 +179,44 @@ public class ModuleController {
 		int result =1;
 		try {
 			Module orignalModule = moduleService.get(module.getId());
-			orignalModule.getPermissions().clear();
 			orignalModule.setName(module.getName());
 			orignalModule.setPriority(module.getPriority());
 			orignalModule.setSn(module.getSn());
 			orignalModule.setDescription(module.getDescription());
 			orignalModule.setUrl(module.getUrl());
-			//List<Long> idList =ReflectionUtils.convertElementPropertyToList(orignalModule.getPermissions(), "id");
+			List<Long> newArrayList =new ArrayList<Long>();
+			for(Permission permission:module.getPermissions())
+			{
+				if(StringUtils.isNotBlank(permission.getShortName()) && permission.getId()!=null)
+				{
+					newArrayList.add(permission.getId());
+				}
+			}
+			List<Permission> lostPermissions =new ArrayList<Permission>();
 			for(Permission permission:module.getPermissions())
 			{
 				if(StringUtils.isNotBlank(permission.getShortName()))
 				{
+					//新增的权限,直接添加
 					if(permission.getId()==null)
 					{
-					  permission.setModule(orignalModule);
-					  orignalModule.getPermissions().add(permission);
-					}
-				}else {
-					for(Permission oPermission:orignalModule.getPermissions())
+						permission.setModule(orignalModule);
+						orignalModule.getPermissions().add(permission);
+						
+					}else//已经存在的
 					{
-						if(permission.getId()!=null)
+						for(Permission oPermission:orignalModule.getPermissions())
 						{
-							if(oPermission.getId().equals(permission.getId()))
+							if(!newArrayList.contains(oPermission.getId()))
 							{
+								lostPermissions.add(oPermission);
 								oPermission.setModule(null);
-								permission =oPermission;
-								break;
 							}
 						}
 					}
-					orignalModule.getPermissions().remove(permission);
 				}
 			}
+			orignalModule.getPermissions().removeAll(lostPermissions);
 			moduleService.update(orignalModule);
 		} catch (Exception e) {
 			result =0;
