@@ -17,12 +17,14 @@ public class RolePermission implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
-	//bi-directional many-to-one association to Role
+	
     @ManyToOne
+    @JoinColumn(name="role_id")
 	private Role role;
 
-	//bi-directional many-to-one association to Permission
+	
     @ManyToOne
+    @JoinColumn(name="permission_id")
 	private Permission permission;
 
     public RolePermission() {
