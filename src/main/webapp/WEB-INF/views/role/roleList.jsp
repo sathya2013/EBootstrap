@@ -66,6 +66,10 @@
 											<i class="icon-edit icon-white"></i>  
 											编辑                                            
 										</a>
+										<a class="btn btn-danger" href="${ctx}/management/role/initrolepermission.do?id=${bean.id}">
+											<i class="icon-trash icon-white"></i> 
+											 权限分配
+										</a>
 										<a class="btn btn-danger" href="#">
 											<i class="icon-trash icon-white"></i> 
 											 删除
