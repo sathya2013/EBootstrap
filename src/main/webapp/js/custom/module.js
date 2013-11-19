@@ -24,7 +24,7 @@ $(function(){
 		          {field:'sn',title:'授权名称',width:loadContentWidth(0.2),rowspan:2,align:'left'},
 		          {field:'parent',title:'父模块名称',width:loadContentWidth(0.2),rowspan:2,align:'left'},
 		          {field:'addChild',title:'添加子模块',width:loadContentWidth(0.2),rowspan:2,align:'center'},		  
-		          {field:'operation',title:'操作',rowspan:2,width:loadContentWidth(0.5),align:'center'}
+		          {field:'operation',title:'操作',rowspan:2,width:loadContentWidth(0.9),align:'center'}
 		          
 		]],
 		toolbar:[
