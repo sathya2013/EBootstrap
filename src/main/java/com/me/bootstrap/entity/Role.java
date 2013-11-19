@@ -41,7 +41,7 @@ public class Role implements Serializable {
 	
 
 	//bi-directional many-to-one association to RolePermission
-	@OneToMany(mappedBy="role")
+	@OneToMany(mappedBy="role",cascade=CascadeType.ALL)
 	private Set<RolePermission> rolePermissions;
 
 	//bi-directional many-to-one association to UserRole

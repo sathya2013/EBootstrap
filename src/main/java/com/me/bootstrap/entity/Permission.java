@@ -36,7 +36,7 @@ public class Permission implements Serializable {
 	private Module module;
 
 	//bi-directional many-to-one association to RolePermission
-	@OneToMany(mappedBy="permission")
+	@OneToMany(mappedBy="permission",cascade=CascadeType.ALL)
 	private Set<RolePermission> rolePermissions;
 
     public Permission() {

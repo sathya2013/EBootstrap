@@ -1,11 +1,15 @@
 package com.me.bootstrap.web.back;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +21,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.common.collect.Maps;
 import com.me.bootstrap.constants.BootstrapConstants;
 import com.me.bootstrap.entity.Module;
 import com.me.bootstrap.entity.Permission;
 import com.me.bootstrap.entity.Role;
 import com.me.bootstrap.entity.RolePermission;
 import com.me.bootstrap.service.ModuleService;
+import com.me.bootstrap.service.PermissionService;
+import com.me.bootstrap.service.RolePermissionService;
 import com.me.bootstrap.service.RoleService;
+import com.me.bootstrap.util.RenderUtil;
 import com.me.bootstrap.web.Servlets;
 
 @Controller
@@ -35,6 +44,13 @@ public class RoleController {
 	
 	@Autowired
 	private ModuleService moduleService;
+	
+	@Autowired
+	private PermissionService permissionService;
+	
+	@Autowired
+	private RolePermissionService rolePermissionService;
+	
 	
 	@RequestMapping(value="/list.do")
 	public String listUser(@PageableDefaults(sort = "id", sortDir = Direction.DESC) Pageable pageable,
@@ -100,12 +116,41 @@ public class RoleController {
 			selectedPermission.add(rp.getPermission());
 		}
 		List<Module> allModules =moduleService.findAll();
+		request.setAttribute("id", role.getId());
 		request.setAttribute("selectedPermission", selectedPermission);
 		request.setAttribute("allModules", allModules);
 		return "/role/initAssignPermission";
 	}
 	
-	
-	
+	@RequestMapping(value="saverolepermission.do",method=RequestMethod.POST)
+	public String saveRolePermission(HttpServletRequest request,HttpServletResponse response)
+	{
+		Map<String, Object> map =Maps.newHashMap();
+		String roleId =request.getParameter("roleId");
+		String permissionStr =request.getParameter("permissionStr");
+		permissionStr =StringUtils.removeEnd(permissionStr, ",");
+		Role role=roleService.get(Long.valueOf(roleId));
+		String[] idArray =permissionStr.split(",");
+		List<RolePermission> rolePermissions =new ArrayList<RolePermission>();
+		for(String id:idArray)
+		{
+			RolePermission rolePermission =new RolePermission();
+			rolePermission.setRole(role);
+			Permission permission =permissionService.loadOne(Long.valueOf(id));
+			rolePermission.setPermission(permission);
+			rolePermissions.add(rolePermission);
+		}
+		role.setRolePermissions(new HashSet<RolePermission>(rolePermissions));
+		try {
+			roleService.save(role);
+			map.put("status", 1);
+			map.put("msg", "保存成功");
+		} catch (Exception e) {
+			map.put("status", 0);
+			map.put("msg", "保存失败");
+		}
+		RenderUtil.renderJson(response,map,"encoding:UTF-8");
+		return null;
+	}
 	
 }
